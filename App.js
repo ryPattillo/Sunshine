@@ -1,9 +1,10 @@
 
 import React,{useState} from 'react';
 import { StyleSheet, Text, View,TextInput,Button,Dimensions} from 'react-native';
-//import Api from './api/power.js';
+import Api from './api/power.js';
 import {MapScreen} from './src/Map.js';
-//import {Graph} from './src/Visualization.js';
+import {Graph} from './src/Visualization.js';
+import MapView,{Marker} from 'react-native-maps';
 
 import {styles} from './src/stylesheet.js';
 
@@ -34,7 +35,9 @@ const HomeScreen = ({navigation,route}) => {
   // Need to choose start date and end date
   // need choose parameter
 
-  [input,setInput] = useState([{"freq":""},{"parameter":""},{"startDate":""},{"endDate":""}])
+  const [input,setInput] = useState([{"freq":""},{"parameter":""},{"startDate":""},{"endDate":""}])
+  const [region,setRegion] = useState([])
+
 
   freq = "Hourly"
   parameter = "CLRSKY_SFC_SW_DWN"
@@ -56,10 +59,35 @@ const HomeScreen = ({navigation,route}) => {
       <Button
       title="Select Location"
       onPress = {()=> {
-        navigation.navigate("Map",{
+        navigation.navigate({
+          name: 'Map',
+          params: { coordinates: [region["latitude"] ,region["longitude"] ]},
         })}}
       />
-      <MapScreen style/>
+      <MapView style= {styles.map}
+          
+          initialRegion={{
+            latitude: 51.5078788,
+            longitude: -0.0877321,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }} 
+          onRegionChangeComplete={region => setRegion(region)}
+          >
+          <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />
+          <Button
+            title="Select"
+            onPress={() => {
+              // Pass and merge params back to home screen
+              console.log(region)
+              navigation.navigate({
+                name: 'Home',
+                params: { coordinates: [region["latitude"] ,region["longitude"] ]},
+              });
+            }}
+          />
+        
+          </MapView>
 
       <Button
             title="Select"

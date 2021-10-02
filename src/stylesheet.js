@@ -12,6 +12,10 @@ export const styles = StyleSheet.create({
       width: Dimensions.get('window').width,
       height: Dimensions.get('window').height/3,
     },
+    map2:{
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,
+    }
   
   });
   
