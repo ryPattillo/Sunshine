@@ -15,6 +15,10 @@ Shortwaves vs longwave
 
 https://legacy.climate.ncsu.edu/edu/RadiationTypes
 
+Geolocation :
+
+https://www.npmjs.com/package/react-native-get-location
+
 
 Parameters that we will need: 
 
