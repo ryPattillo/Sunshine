@@ -59,12 +59,30 @@ const HomeScreen = ({navigation,route}) => {
         navigation.navigate("Map",{
         })}}
       />
+
+      <MapScreen style/>
+
+      <Button
+            title="Select"
+            onPress={() => {
+              // Pass and merge params back to home screen
+              console.log(region)
+              navigation.navigate({
+                name: 'Home',
+                params: { coordinates: [region["latitude"] ,region["longitude"] ]},
+              });
+            }}
+          />
+
+          
       <Button 
       title="Generate Chart"
       onPress = {()=> {
         navigation.navigate("Map",{
         })}}
       />
+
+
       <Graph
       data = {[
         {quarter: 1, earnings: 13000},
