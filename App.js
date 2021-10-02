@@ -60,7 +60,7 @@ const HomeScreen = ({navigation,route}) => {
         })}}
       />
       <Button 
-      title="API Call"
+      title="Generate Chart"
       onPress = {()=> {
         navigation.navigate("Map",{
         })}}
