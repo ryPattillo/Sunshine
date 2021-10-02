@@ -3,7 +3,7 @@ import React,{useState} from 'react';
 import { StyleSheet, Text, View,TextInput,Button,Dimensions} from 'react-native';
 //import Api from './api/power.js';
 import {MapScreen} from './src/Map.js';
-import {Graph} from './src/Visualization.js';
+//import {Graph} from './src/Visualization.js';
 
 import {styles} from './src/stylesheet.js';
 
@@ -53,7 +53,7 @@ const HomeScreen = ({navigation,route}) => {
   return (
     <View>
       <Text style={{ margin: 10 }}>Coordinates Selected: {coordinates}</Text>
-      <Button 
+      <Button
       title="Select Location"
       onPress = {()=> {
         navigation.navigate("Map",{
@@ -84,14 +84,14 @@ const HomeScreen = ({navigation,route}) => {
 
 
       <Graph
-      data = {[
-        {quarter: 1, earnings: 13000},
-        {quarter: 2, earnings: 16500},
-        {quarter: 3, earnings: 14250},
-        {quarter: 4, earnings: 19000},
-      ]}
-      />
-      <Text> SUNSHINE !!! </Text>
+              data = {[
+                {quarter: 1, earnings: 13000},
+                {quarter: 2, earnings: 16500},
+                {quarter: 3, earnings: 14250},
+                {quarter: 4, earnings: 19000},
+              ]}
+              />
+        <Text> SUNSHINE !!! </Text>
     </View>
   )
 }
