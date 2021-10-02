@@ -18,14 +18,19 @@ export const MapScreen = ({ navigation,route }) => {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }} 
-          //onRegionChangeComplete={region => setRegion(region)}
-          onPress={coordinate => console.log(coordinate )}
+          onRegionChangeComplete={region => setRegion(region)}
           >
+  
+         
 
-            <Marker coordinate={{ latitude: 51.5078788, longitude: -0.0877321 }} />
+          <Marker coordinate={{ latitude: region["latitude"] ,longitude: region["longitude"] }
+          }
+           />
           <Button
             title="Select"
             onPress={() => {
+
+              
               // Pass and merge params back to home screen
               console.log(region)
               navigation.navigate({
