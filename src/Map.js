@@ -10,11 +10,6 @@ export const MapScreen = ({ navigation,route }) => {
 
     [region,setRegion] = useState([])
 
-    function place(region){
-      console.log(region);
-      
-    }
-
     return (
         <MapView style= {styles.map2}
           

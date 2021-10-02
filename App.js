@@ -3,7 +3,7 @@ import React,{useState} from 'react';
 import { StyleSheet, Text, View,ScrollView,TextInput,Button, TouchableOpacity, Dimensions} from 'react-native';
 import Api from './api/power.js';
 import {MapScreen} from './src/Map.js';
-import HomeButton from './src/buttons.js';
+import {HomeButton} from './src/buttons.js';
 import {Graph} from './src/Visualization.js';
 import MapView,{Marker} from 'react-native-maps';
 
@@ -56,7 +56,7 @@ const HomeScreen = ({navigation,route}) => {
       />
 
       <MapView style= {styles.map}
-          
+        //customMapStyle={mapDarkStyle}
         initialRegion={{
           latitude: 51.5078788,
           longitude: -0.0877321,
@@ -94,15 +94,16 @@ const HomeScreen = ({navigation,route}) => {
 }
 
 const GraphComponent = (props) => {
+ 
 
 if(props.value == 1) {
 return (
 <Graph
 data = {[
-  {quarter: 1, earnings: 13000},
-  {quarter: 2, earnings: 16500},
-  {quarter: 3, earnings: 14250},
-  {quarter: 4, earnings: 19000},
+  {x: 1, y: 13000},
+  {x: 2, y: 16500},
+  {x: 3, y: 14250},
+  {x: 4,y: 19000},
 ]}
 /> )}
 else return null

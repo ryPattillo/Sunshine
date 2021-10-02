@@ -21,12 +21,28 @@ export const styles = StyleSheet.create({
       paddingVertical:14,
       backgroundColor:'#007AFF',
     },
+    button1:{
+      //position: "center",
+      width: 60,
+      height: 60,
+      borderRadius: 60/2,
+      alignItems:"center",
+      justifyContent:"center",
+      shadowRadius:10,
+      shadowColor:"#007AFF",
+      //shadowOpacity:0.3,
+      //shadowOffset:{height:10}
+
+    },
     buttonText:{
       color:'white',
       fontWeight: 'bold',
       textTransform: 'uppercase',
       fontSize: 16,
       textAlign: 'center',
+    },
+    menu:{
+      backgroundColor:"#007AFF"
     }
 
   
