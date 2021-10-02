@@ -22,6 +22,10 @@ export const styles = StyleSheet.create({
       backgroundColor:'#007AFF',
     },
     buttonText:{
+      color:'white',
+      fontWeight: 'bold',
+      textTransform: 'uppercase',
+      fontSize: 16,
       textAlign: 'center',
     }
 

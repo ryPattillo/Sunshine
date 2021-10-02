@@ -1,6 +1,6 @@
 
 import React,{useState} from 'react';
-import { StyleSheet, Text, View,TextInput,Button, TouchableOpacity, Dimensions} from 'react-native';
+import { StyleSheet, Text, View,ScrollView,TextInput,Button, TouchableOpacity, Dimensions} from 'react-native';
 import Api from './api/power.js';
 import {MapScreen} from './src/Map.js';
 import HomeButton from './src/buttons.js';
@@ -17,8 +17,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 export default function App() {
 
   const Stack = createNativeStackNavigator();
-
-
     return (
       <NavigationContainer>
         <Stack.Navigator>
@@ -27,40 +25,27 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     )
-
-
 }
+
 
 
 const HomeScreen = ({navigation,route}) => {
 
-  // Need to get date,paramter names. Date picker and drop down lsit
-  // Need to choose start date and end date
-  // need choose parameter
-
-  const [input,setInput] = useState([{"freq":""},{"parameter":""},{"startDate":""},{"endDate":""}])
   const [region,setRegion] = useState([])
-  const[graph,setGraph] = useState(0)
+  const [graph,setGraph] = useState(0)
+  const [coordinates,setCoordinates] = useState({"latitude":51.5078788,"longitude":-0.0877321})
 
+  var freq = "Hourly"
+  var parameter = "CLRSKY_SFC_SW_DWN"
+  var startDate = "20200810"
+  var endDate = "20210810"
 
-  freq = "Hourly"
-  parameter = "CLRSKY_SFC_SW_DWN"
-  startDate = "20200810"
-  endDate = "20210810"
-
-  if(!route.params?.coordinates){
-    coordinates = "No Location Selected"
-  }else
-
-    coordinates = route.params?.coordinates
-    latitude = coordinates[0]
-    longitude = coordinates[1]
-    console.log(coordinates)
+  var latitude = coordinates["latitude"]
+  var longitude = coordinates["longitude"]
 
   return (
-    <View>
-      <Text style={{ margin: 10 }}>Latitude: {latitude}</Text>
-      <Text style={{ margin: 10 }}>Longitude: {longitude}</Text>
+    <ScrollView>
+   
       <HomeButton
       text='Expand Map'
       onPress = {()=> {
@@ -69,44 +54,42 @@ const HomeScreen = ({navigation,route}) => {
           params: { coordinates: [region["latitude"] ,region["longitude"] ]},
         })}}
       />
+
       <MapView style= {styles.map}
           
-          initialRegion={{
-            latitude: 51.5078788,
-            longitude: -0.0877321,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }} 
-          onRegionChangeComplete={region => setRegion(region)}
-          >
-          <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />
-          
+        initialRegion={{
+          latitude: 51.5078788,
+          longitude: -0.0877321,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }} 
 
-        
-          </MapView>
-          <HomeButton style={styles.button}
-            text="Select"
+        onRegionChangeComplete={region => setRegion(region) }>
+
+        <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />
+          
+        </MapView>
+          
+        <HomeButton style={styles.button}
+            text="Select Location"
             onPress={() => {
-              // Pass and merge params back to home screen
-              //alert("You pressed a button!")
-              navigation.navigate({
-                name: 'Home',
-                params: { coordinates: [region["latitude"] ,region["longitude"] ]},
-              });
+             setCoordinates(region)
             }}
           />
+      <Text style={{ textAlign: 'center', margin: 10 }}>Latitude: {latitude.toFixed(4)} Longitude: {longitude.toFixed(4)}</Text>
 
-          
       <Button 
       title="Generate Chart"
       onPress = {(graph)=> {
+        
         setGraph(1)
+        
+
         }}
       />
-
       <GraphComponent value = {graph} />
 
-    </View>
+    </ScrollView>
   )
 }
 
