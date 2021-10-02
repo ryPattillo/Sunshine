@@ -1,17 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
+
 import React,{useState} from 'react';
 import { StyleSheet, Text, View,TextInput,Button,Dimensions} from 'react-native';
-import test from './api/power.js';
-import MapView from 'react-native-maps';
+//import Api from './api/power.js';
+import {MapScreen} from './src/Map.js';
+
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 export default function App() {
-
-  const [data,setData] = useState(3)
-
-  test(setData)
 
   const Stack = createNativeStackNavigator();
 
@@ -48,13 +46,22 @@ const styles = StyleSheet.create({
 
 const HomeScreen = ({navigation,route}) => {
 
-  const [coordinates,setCoordinates] = useState([31.2,12.5])
+  if(!route.params?.coordinates){
+    coordinates = "No Location Selected"
+  }else
+    coordinates = route.params?.coordinates
 
   return (
     <View>
-       <Text style={{ margin: 10 }}>Coordinates Selected: {route.params?.coordinates}</Text>
+       <Text style={{ margin: 10 }}>Coordinates Selected: {coordinates}</Text>
       <Button 
-      title="Maps"
+      title="Select Location"
+      onPress = {()=> {
+        navigation.navigate("Map",{
+        })}}
+      />
+        <Button 
+      title="API Call"
       onPress = {()=> {
         navigation.navigate("Map",{
         })}}
@@ -66,34 +73,6 @@ const HomeScreen = ({navigation,route}) => {
 
 }
 
-const MapScreen = ({ navigation,route }) => {
 
-return (
-    <View>
-    <MapView style={styles.map}
-      
-      initialRegion={{
-        latitude: 37.78825,
-        longitude: -122.4324,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      }} 
-      onRegionChange={this.onRegionChange}
-      >
-      <Button
-        title="Select"
-        onPress={() => {
-          // Pass and merge params back to home screen
-          navigation.navigate({
-            name: 'Home',
-            params: { coordinates: [12.1,34.1] },
-          });
-        }}
-      />
-    
-      </MapView>
-      </View>
-      )
 
-    
-}
+// Will return the selected coordinates
