@@ -1,8 +1,9 @@
 
 import React,{useState} from 'react';
-import { StyleSheet, Text, View,TextInput,Button,Dimensions} from 'react-native';
+import { StyleSheet, Text, View,TextInput,Button, TouchableOpacity, Dimensions} from 'react-native';
 import Api from './api/power.js';
 import {MapScreen} from './src/Map.js';
+import HomeButton from './src/buttons.js';
 import {Graph} from './src/Visualization.js';
 import MapView,{Marker} from 'react-native-maps';
 
@@ -29,6 +30,8 @@ export default function App() {
 
 
 }
+
+
 const HomeScreen = ({navigation,route}) => {
 
   // Need to get date,paramter names. Date picker and drop down lsit
@@ -37,6 +40,7 @@ const HomeScreen = ({navigation,route}) => {
 
   const [input,setInput] = useState([{"freq":""},{"parameter":""},{"startDate":""},{"endDate":""}])
   const [region,setRegion] = useState([])
+  const[graph,setGraph] = useState(0)
 
 
   freq = "Hourly"
@@ -55,9 +59,10 @@ const HomeScreen = ({navigation,route}) => {
 
   return (
     <View>
-      <Text style={{ margin: 10 }}>Coordinates Selected: {coordinates}</Text>
-      <Button
-      title="Select Location"
+      <Text style={{ margin: 10 }}>Latitude: {latitude}</Text>
+      <Text style={{ margin: 10 }}>Longitude: {longitude}</Text>
+      <HomeButton
+      text='Expand Map'
       onPress = {()=> {
         navigation.navigate({
           name: 'Map',
@@ -75,25 +80,15 @@ const HomeScreen = ({navigation,route}) => {
           onRegionChangeComplete={region => setRegion(region)}
           >
           <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />
-          <Button
-            title="Select"
-            onPress={() => {
-              // Pass and merge params back to home screen
-              console.log(region)
-              navigation.navigate({
-                name: 'Home',
-                params: { coordinates: [region["latitude"] ,region["longitude"] ]},
-              });
-            }}
-          />
+          
+
         
           </MapView>
-
-      <Button
-            title="Select"
+          <HomeButton style={styles.button}
+            text="Select"
             onPress={() => {
               // Pass and merge params back to home screen
-              console.log(region)
+              //alert("You pressed a button!")
               navigation.navigate({
                 name: 'Home',
                 params: { coordinates: [region["latitude"] ,region["longitude"] ]},
@@ -104,25 +99,31 @@ const HomeScreen = ({navigation,route}) => {
           
       <Button 
       title="Generate Chart"
-      onPress = {()=> {
-        navigation.navigate("Map",{
-        })}}
+      onPress = {(graph)=> {
+        setGraph(1)
+        }}
       />
 
+      <GraphComponent value = {graph} />
 
-      <Graph
-              data = {[
-                {quarter: 1, earnings: 13000},
-                {quarter: 2, earnings: 16500},
-                {quarter: 3, earnings: 14250},
-                {quarter: 4, earnings: 19000},
-              ]}
-              />
-        <Text> SUNSHINE !!! </Text>
     </View>
   )
 }
 
+const GraphComponent = (props) => {
 
+if(props.value == 1) {
+return (
+<Graph
+data = {[
+  {quarter: 1, earnings: 13000},
+  {quarter: 2, earnings: 16500},
+  {quarter: 3, earnings: 14250},
+  {quarter: 4, earnings: 19000},
+]}
+/> )}
+else return null
+
+}
 
 // Will return the selected coordinates

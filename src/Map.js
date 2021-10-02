@@ -4,6 +4,7 @@ import React,{useState} from 'react';
 import {SyleSheet, Text, View,TextInput,Button,Dimensions} from 'react-native';
 import {styles} from './stylesheet.js';
 import { render } from 'react-dom';
+import HomeButton from './buttons.js';
 
 export const MapScreen = ({ navigation,route }) => {
 
@@ -18,16 +19,16 @@ export const MapScreen = ({ navigation,route }) => {
         <MapView style= {styles.map2}
           
           initialRegion={{
-            latitude: route.params.coordinate[0],
-            longitude: route.params.coordinate[1],
+            latitude: route.params.coordinates[0],
+            longitude: route.params.coordinates[1],
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }} 
           onRegionChangeComplete={region => setRegion(region)}
-          onPress ={ mark => {
-            console.log(region)
-             (place(region))
-          }}  
+          // onPress ={ mark => {
+          //   console.log(region)
+          //    (place(region))
+          // }}  
           >
           <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />
           <Button
