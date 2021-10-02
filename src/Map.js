@@ -1,7 +1,9 @@
 
 import MapView from 'react-native-maps';
 import React,{useState} from 'react';
-import { StyleSheet, Text, View,TextInput,Button,Dimensions} from 'react-native';
+import {SyleSheet, Text, View,TextInput,Button,Dimensions} from 'react-native';
+import {styles} from './stylesheet.js';
+
 
 
 export const MapScreen = ({ navigation,route }) => {
@@ -35,18 +37,3 @@ export const MapScreen = ({ navigation,route }) => {
     
         
     }
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 5,
-      height:10,
-      backgroundColor: '#fff',
-      justifyContent: 'center',
-    },
-    map: {
-      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height,
-    },
-  
-  });
-  

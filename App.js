@@ -3,6 +3,7 @@ import React,{useState} from 'react';
 import { StyleSheet, Text, View,TextInput,Button,Dimensions} from 'react-native';
 //import Api from './api/power.js';
 import {MapScreen} from './src/Map.js';
+import {styles} from './src/stylesheet.js';
 
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -28,23 +29,10 @@ export default function App() {
 }
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 5,
-    height:10,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-  },
-  map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
-
-});
-
-
 
 const HomeScreen = ({navigation,route}) => {
+
+  // Need to get date,paramter names. Date picker and drop down lsit 
 
   if(!route.params?.coordinates){
     coordinates = "No Location Selected"
@@ -68,9 +56,6 @@ const HomeScreen = ({navigation,route}) => {
       />
     </View>
   )
-
-
-
 }
 
 
