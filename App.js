@@ -25,12 +25,12 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     )
- 
-    
+
+
 }
 const HomeScreen = ({navigation,route}) => {
 
-  // Need to get date,paramter names. Date picker and drop down lsit 
+  // Need to get date,paramter names. Date picker and drop down lsit
   // Need to choose start date and end date
   // need choose parameter
 
@@ -59,7 +59,7 @@ const HomeScreen = ({navigation,route}) => {
         navigation.navigate("Map",{
         })}}
       />
-      <Button 
+      <Button
       title="Generate Chart"
       onPress = {()=> {
         navigation.navigate("Map",{
