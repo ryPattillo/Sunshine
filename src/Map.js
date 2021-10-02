@@ -31,11 +31,11 @@ export const MapScreen = ({ navigation,route }) => {
           // }}  
           >
           <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />
-          <Button
-            title="Select"
+          <HomeButton style={styles.button}
+            text="Select"
             onPress={() => {
               // Pass and merge params back to home screen
-              console.log(region)
+              //alert("You pressed a button!")
               navigation.navigate({
                 name: 'Home',
                 params: { coordinates: [region["latitude"] ,region["longitude"] ]},
