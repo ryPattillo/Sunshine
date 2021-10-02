@@ -18,7 +18,8 @@ export const MapScreen = ({ navigation,route }) => {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }} 
-          onRegionChangeComplete={region => setRegion(region)}
+          //onRegionChangeComplete={region => setRegion(region)}
+          onPress={coordinate => console.log(coordinate )}
           >
 
             <Marker coordinate={{ latitude: 51.5078788, longitude: -0.0877321 }} />
