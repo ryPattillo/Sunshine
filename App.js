@@ -54,7 +54,7 @@ const HomeScreen = ({navigation,route}) => {
               params: { coordinates: [region["latitude"] ,region["longitude"] ]},
             })}}
         />
-       <MapView style= {styles.map}
+       {/* <MapView style= {styles.map}
            initialRegion={{
               latitude: 51.5078788,
               longitude: -0.0877321,
@@ -63,7 +63,7 @@ const HomeScreen = ({navigation,route}) => {
              }} 
             onRegionChangeComplete={region => setRegion(region) }>
             <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />  
-        </MapView> 
+        </MapView>  */}
           
         <HomeButton style={styles.button}
             text="Select Location"
@@ -123,6 +123,9 @@ const HomeScreen = ({navigation,route}) => {
               <List.Item 
               title="daily"
               onPress = {() => {setFreq("daily") }} />
+              <List.Item 
+              title="weekly"
+              onPress = {() => {setFreq("weekly") }} />
               <List.Item 
               title="monthly"
               onPress = {() => {setFreq("monthly") }} />

@@ -13,12 +13,14 @@ export default function getApiData(setData,freq,latitude,longitude,parameter,sta
   if (freq == "monthly") {
     var formattedStartDate = format(startDate, "yyyy");
     var formattedEndDate = format(endDate, "yyyy");
-  } else if (freq == "daily") {
+  } else {
     var formattedStartDate = format(startDate, "yyyyMMdd");
     var formattedEndDate = format(endDate, "yyyyMMdd");
   }
   
-  var url = "https://power.larc.nasa.gov/api/temporal/" + freq +
+  var temporal = (freq == "weekly") ? "daily" : freq;
+
+  var url = "https://power.larc.nasa.gov/api/temporal/" + temporal +
             "/point?parameters=" + parameter +
             "&community=RE&longitude=" + longitude +
             "&latitude=" + latitude +
@@ -35,6 +37,7 @@ export default function getApiData(setData,freq,latitude,longitude,parameter,sta
       preparedData["data"] = [];
 
       var xVal = 0;
+      var weekTotal = 0;
       for (const [key, value] of Object.entries(response.data["properties"]["parameter"][parameter])) {
 
         if (parseInt(key.slice(4,6)) > 12) { // skip the weird 13th month returned by API
@@ -42,19 +45,40 @@ export default function getApiData(setData,freq,latitude,longitude,parameter,sta
         }
 
         var formattedDate = "";
-        if (freq == "daily") {
+        if (freq == "weekly") {
           var dateString = key.slice(0,4)+"-"+key.slice(4,6)+"-"+key.slice(6,8)+"T23:45Z";
           var date = new Date(dateString);
-          formattedDate = format(date, "MM/dd/yyyy");
-        } else {
+
+          var day = date.getDay();
+          if (xVal == 0) { // We want to start at week 1
+            xVal++;
+          }
+
+          weekTotal += value;
+          if (day == 0) {
+            var weekAvg = weekTotal / 7;
+            var weekLabel = key.slice(0,4) + " Week " + xVal;
+            preparedData["data"].push({x: xVal, y: weekAvg, meta: weekLabel})
+            // reset weekTotal and increment XVal
+            weekTotal = 0;
+            xVal++;
+          }
+
+        } else if ("monthly") {
           console.log(key);
           var dateString = key.slice(0,4)+"-"+key.slice(4,6)+"-01"+"T23:45Z";
           var date = new Date(dateString);
           formattedDate = format(date, "MMM, yyyy")
+          xVal++;
+          preparedData["data"].push({x: xVal, y: value, meta: formattedDate});
+        } else {
+          var dateString = key.slice(0,4)+"-"+key.slice(4,6)+"-"+key.slice(6,8)+"T23:45Z";
+          var date = new Date(dateString);
+          formattedDate = format(date, "MM/dd/yyyy");
+          xVal++;
+          preparedData["data"].push({x: xVal, y: value, meta: formattedDate});
         }
 
-        xVal++;
-        preparedData["data"].push({x: xVal, y: value, meta: formattedDate});
       }
 
       console.log(preparedData);
