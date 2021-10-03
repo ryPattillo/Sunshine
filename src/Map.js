@@ -20,10 +20,7 @@ export const MapScreen = ({ navigation,route }) => {
             longitudeDelta: 0.0421,
           }} 
           onRegionChangeComplete={region => setRegion(region)}
-          // onPress ={ mark => {
-          //   console.log(region)
-          //    (place(region))
-          // }}  
+     
           >
           <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />
           <HomeButton style={styles.button}

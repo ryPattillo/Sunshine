@@ -1,15 +1,13 @@
 
 import React,{useState} from 'react';
-import { StyleSheet, Text, View,ScrollView,TextInput,Picker,Button, TouchableOpacity, Dimensions} from 'react-native';
+import { View,ScrollView,Picker} from 'react-native';
+import { TextInput,List,Card,} from 'react-native-paper';
 import useApiData from './api/power.js';
 import {MapScreen} from './src/Map.js';
 import {HomeButton} from './src/buttons.js';
 import {Graph} from './src/Visualization.js';
 import MapView,{Marker} from 'react-native-maps';
-
 import {styles} from './src/stylesheet.js';
-
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -27,74 +25,118 @@ export default function App() {
     )
 }
 
-
-
 const HomeScreen = ({navigation,route}) => {
 
   const [region,setRegion] = useState([])
-  const [graph,setGraph] = useState(0)
-  const [coordinates,setCoordinates] = useState({"latitude":51.5078788,"longitude":-0.0877321})
-  const [data, setData] = useState({});
+  const [coordinates,setCoordinates] = useState({"latitude":51.5078788,"longitude":-0.0877321}) //Initial Coordinate data
+  const [data, setData] = useState({});// API return data
+  const [startDate, setStartDate] = useState(new Date("2020-01-01T23:45Z")); // Initial Date
+  const [endDate, setEndDate] = useState(new Date("2020-05-31T23:45Z")); // End Date
+  const [parameter, setParameter] = useState("None Selected"); // Parameters
+  const [freq, setFreq] = useState("None Selected"); // Frequency
 
-  // var freq = "Hourly"
-  // var parameter = "CLRSKY_SFC_SW_DWN"
-  // var startDate = "20200810"
-  // var endDate = "20210810"
+  if(route.params?.coordinates)
+   setCoordinates({"latitude":route.params.coordinates[0],"longitude":route.params.coordinates[1]})
+
 
   var latitude = coordinates["latitude"]
   var longitude = coordinates["longitude"]
 
-  var freq = "daily"
-  //var freq = "monthly"
-  var parameter = "ALLSKY_SFC_SW_DWN"  // ALLSKY_SFC_LW_DWN
-  var startDate = new Date("2020-01-01T23:45Z") // T and Z must be present
-  var endDate =  new Date("2020-01-31T23:45Z") // T and Z must be present
-  //console.log(data);
   return (
+
     <ScrollView>
-   
-      <HomeButton
-      text='Expand Map'
-      onPress = {()=> {
-        navigation.navigate({
-          name: 'Map',
-          params: { coordinates: [region["latitude"] ,region["longitude"] ]},
-        })}}
-      />
-
-      {/* <MapView style= {styles.map}
-        //customMapStyle={mapDarkStyle}
-        initialRegion={{
-          latitude: 51.5078788,
-          longitude: -0.0877321,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }} 
-
-        onRegionChangeComplete={region => setRegion(region) }>
-
-        <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />
-          
-        </MapView> */}
+      <View>
+        <HomeButton
+          text='Expand Map'
+          onPress = {()=> {
+            navigation.navigate({
+              name: 'Map',
+              params: { coordinates: [region["latitude"] ,region["longitude"] ]},
+            })}}
+        />
+       <MapView style= {styles.map}
+           initialRegion={{
+              latitude: 51.5078788,
+              longitude: -0.0877321,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+             }} 
+            onRegionChangeComplete={region => setRegion(region) }>
+            <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />  
+        </MapView> 
           
         <HomeButton style={styles.button}
             text="Select Location"
             onPress={() => {
              setCoordinates(region)
             }}
-          />
-      <Text style={{ textAlign: 'center', margin: 10 }}>Latitude: {latitude.toFixed(4)} Longitude: {longitude.toFixed(4)}</Text>
+        />
+      
+      </View>
 
-      <DropDown></DropDown>
-      <Button title="Get Solar Data" onPress={() => {useApiData(setData,freq,latitude,longitude,parameter,startDate,endDate)}}/>
+      <View style = {styles.inputContainer}>
+        <Card.Title
+          title={latitude.toFixed(6) +" , " +longitude.toFixed(6)}
+          left={(props) => <TextInput.Icon name="map" />} 
+        />
+      </View>
+
+   
+      <View style={styles.inputContainer}>
+         <TextInput
+            label="Start Date"
+            placeholder={"yyyy-mm-dd"}
+            left={<TextInput.Icon name="calendar" />}  
+            onChangeText={setStartDate}
+            value={startDate}
+          />
+        </View>
       
-      {/* <Button 
-      title="Generate Chart"
-      onPress = {(graph)=> {
-        setGraph(1)
-        }}
-      /> */}
-      
+        <View style={styles.inputContainer}>
+          <TextInput
+          
+            left={<TextInput.Icon name="calendar" 
+              />}
+            placeholder={"yyyy-mm-dd"}
+            onChangeText={setEndDate}
+            value={endDate}
+          />
+        </View>
+
+        <View style={styles.dropDownContainer}>
+          <List.AccordionGroup>
+            <List.Accordion title={parameter} id="1">
+              <List.Item 
+              title="CLRSKY_SFC_SW_DWN"
+              onPress = {() => {setParameter("CLRSKY_SFC_SW_DWN") }} />
+              <List.Item 
+              title="ALLSKY_SFC_SW_DWN"
+              onPress = {() => {setParameter("ALLSKY_SFC_SW_DWN") }} />
+            </List.Accordion>
+          </List.AccordionGroup>
+        </View>
+   
+    
+         <View style={styles.dropDownContainer}>
+          <List.AccordionGroup>
+            <List.Accordion title={freq} id="1">
+              <List.Item 
+              title="daily"
+              onPress = {() => {setFreq("daily") }} />
+              <List.Item 
+              title="monthly"
+              onPress = {() => {setFreq("monthly") }} />
+            </List.Accordion>
+          </List.AccordionGroup>
+      </View>
+
+      <HomeButton style={styles.button}
+            text="Generate Solar Data"
+            onPress={() => {
+            useApiData(setData,freq,coordinates["latitude"],coordinates["longitude"],parameter,startDate,endDate)
+            }}
+        />
+   
       <GraphComponent value = {data} />
 
     </ScrollView>
@@ -103,21 +145,19 @@ const HomeScreen = ({navigation,route}) => {
 
 const GraphComponent = (props) => {
  
-
 if(Object.keys(props.value).length > 0) {
-return (
-<Graph
-data = {props.value["data"]}
-/> )}
-else return null
-
+  return (
+    <Graph
+      data = {props.value["data"]}
+    /> )}
+  else return null
 }
 
 
 const DropDown = () => {
   const [selectedValue, setSelectedValue] = useState("java");
   return (
-    <View style={styles.container}>
+
       <Picker
         selectedValue={selectedValue}
         style={{ height: 30, width: 200}}
@@ -128,7 +168,7 @@ const DropDown = () => {
         <Picker.Item label="Parameter 3" value="p3" />
         <Picker.Item label="Parameter 4" value="p4" />
       </Picker>
-    </View>
+
   );
 }
 

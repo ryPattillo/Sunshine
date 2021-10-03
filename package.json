@@ -21,6 +21,7 @@
     "react-native-geolocation-service": "^5.3.0-beta.3",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-maps": "^0.29.3",
+    "react-native-paper": "^4.9.2",
     "react-native-responsive-linechart": "^5.7.1",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
