@@ -45,18 +45,18 @@ export const Graph = (props) => {
 
 
 const CustomTooltip = (props) => {
-
+if(props.position["x"]&&props.position["y"]){
 return (
   <TextSVG 
   x={props.position["x"]}
-  y={props.position["y"]-5} 
-  fill={"black"} 
+  y={props.position["y"]-20} 
+  fill={"grey"} 
   fontSize="12" 
   fontWeight="bold"
   backgroundColor="blue" 
-  textAnchor="middle">{"Date:"+props.value["meta"]+"\n"+props.value["y"]}</TextSVG>
+  textAnchor="middle">{props.value["meta"]+","+props.value["y"]}</TextSVG>
 )
-
+}
 
 
 }

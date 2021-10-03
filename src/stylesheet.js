@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
       height: Dimensions.get('window').height,
     },
     button:{
-      borderRadius:8,
+      //borderRadius:2,
       paddingVertical:14,
       backgroundColor:'#007AFF',
     },

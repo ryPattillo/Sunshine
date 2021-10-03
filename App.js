@@ -12,6 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
+
 export default function App() {
 
   const Stack = createNativeStackNavigator();
@@ -34,9 +35,9 @@ const HomeScreen = ({navigation,route}) => {
   const [endDate, setEndDate] = useState(new Date("2020-05-31T23:45Z")); // End Date
   const [parameter, setParameter] = useState("None Selected"); // Parameters
   const [freq, setFreq] = useState("None Selected"); // Frequency
+  var names={"CLRSKY_SFC_SW_DWN":"Clear Sky Surface Shortwave Downward Irradiance","None Selected":"None Selected","ALLSKY_SFC_SW_DWN":"All Sky Surface Shortwave Downward Irradiance"}
 
-  //if(route.params?.coordinates)
-   //setCoordinates({"latitude":route.params.coordinates[0],"longitude":route.params.coordinates[1]})
+
 
   var latitude = coordinates["latitude"]
   var longitude = coordinates["longitude"]
@@ -84,8 +85,9 @@ const HomeScreen = ({navigation,route}) => {
       <View style={styles.inputContainer}>
          <TextInput
             label="Start Date"
-            placeholder={"yyyy-mm-dd"}
+          
             left={<TextInput.Icon name="calendar" />}  
+            placeholder={"yyyy-mm-dd"}
             onChangeText={setStartDate}
             value={startDate}
           />
@@ -104,12 +106,12 @@ const HomeScreen = ({navigation,route}) => {
 
         <View style={styles.dropDownContainer}>
           <List.AccordionGroup>
-            <List.Accordion title={parameter} id="1">
+            <List.Accordion title={names[parameter]} id="1">
               <List.Item 
-              title="CLRSKY_SFC_SW_DWN"
+              title={names["CLRSKY_SFC_SW_DWN"]}
               onPress = {() => {setParameter("CLRSKY_SFC_SW_DWN") }} />
               <List.Item 
-              title="ALLSKY_SFC_SW_DWN"
+              title={names["ALLSKY_SFC_SW_DWN"]}
               onPress = {() => {setParameter("ALLSKY_SFC_SW_DWN") }} />
             </List.Accordion>
           </List.AccordionGroup>
@@ -130,7 +132,7 @@ const HomeScreen = ({navigation,route}) => {
       </View>
 
       <HomeButton style={styles.button}
-            text="Generate Solar Data"
+            text="Graph My Sunshine!"
             onPress={() => {
             useApiData(setData,freq,coordinates["latitude"],coordinates["longitude"],parameter,startDate,endDate)
             }}
