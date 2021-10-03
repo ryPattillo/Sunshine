@@ -1,7 +1,7 @@
 
 import React,{useState} from 'react';
 import { StyleSheet, Text, View,ScrollView,TextInput,Picker,Button, TouchableOpacity, Dimensions} from 'react-native';
-import getApiData from './api/power.js';
+import useApiData from './api/power.js';
 import {MapScreen} from './src/Map.js';
 import {HomeButton} from './src/buttons.js';
 import {Graph} from './src/Visualization.js';
@@ -34,22 +34,21 @@ const HomeScreen = ({navigation,route}) => {
   const [region,setRegion] = useState([])
   const [graph,setGraph] = useState(0)
   const [coordinates,setCoordinates] = useState({"latitude":51.5078788,"longitude":-0.0877321})
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
 
-  var freq = "Hourly"
-  var parameter = "CLRSKY_SFC_SW_DWN"
-  var startDate = "20200810"
-  var endDate = "20210810"
+  // var freq = "Hourly"
+  // var parameter = "CLRSKY_SFC_SW_DWN"
+  // var startDate = "20200810"
+  // var endDate = "20210810"
 
   var latitude = coordinates["latitude"]
   var longitude = coordinates["longitude"]
 
-  var freq = "daily"
+  var freq = "monthly"
   var parameter = "ALLSKY_SFC_SW_DWN"  // ALLSKY_SFC_LW_DWN
-  var startDate = new Date("2021-01-01T23:45Z") // T and Z must be present
-  var endDate =  new Date("2021-12-31T23:45Z") // T and Z must be present
-  getApiData(setData,freq,latitude,longitude,parameter,startDate,endDate)
-  console.log(data);
+  var startDate = new Date("2020-01-01T23:45Z") // T and Z must be present
+  var endDate =  new Date("2020-12-31T23:45Z") // T and Z must be present
+  //console.log(data);
   return (
     <ScrollView>
    
@@ -86,6 +85,7 @@ const HomeScreen = ({navigation,route}) => {
       <Text style={{ textAlign: 'center', margin: 10 }}>Latitude: {latitude.toFixed(4)} Longitude: {longitude.toFixed(4)}</Text>
 
       <DropDown></DropDown>
+      <Button title="Get Solar Data" onPress={() => {useApiData(setData,freq,latitude,longitude,parameter,startDate,endDate)}}/>
       <Button 
       title="Generate Chart"
       onPress = {(graph)=> {
@@ -94,7 +94,7 @@ const HomeScreen = ({navigation,route}) => {
 
         }}
       />
-      <GraphComponent value = {graph} />
+      <GraphComponent value = {data} />
 
     </ScrollView>
   )
@@ -103,15 +103,10 @@ const HomeScreen = ({navigation,route}) => {
 const GraphComponent = (props) => {
  
 
-if(props.value == 1) {
+if(Object.keys(props.value).length > 0) {
 return (
 <Graph
-data = {[
-  {x: 1, y: 13000},
-  {x: 2, y: 16500},
-  {x: 3, y: 14250},
-  {x: 4,y: 19000},
-]}
+data = {props.value["data"]}
 /> )}
 else return null
 

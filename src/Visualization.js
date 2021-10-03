@@ -11,8 +11,8 @@ export const Graph = (props) => {
       style={{ height: 300, width: 400 }}
       data={props.data}
       padding={{ left: 40, bottom: 20, right: 20, top: 20 }}
-      xDomain={{ min: -2, max: 10 }}
-      yDomain={{ min: 0, max: 1000 }}
+      xDomain={{ min: 202001, max: 202012 }}
+      yDomain={{ min: 0, max: 10}}
     >
       <VerticalAxis tickCount={11} theme={{ labels: { formatter: (v) => v.toFixed(2) } }} />
       <HorizontalAxis tickCount={5} />
