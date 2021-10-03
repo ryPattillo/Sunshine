@@ -86,14 +86,14 @@ const HomeScreen = ({navigation,route}) => {
 
       <DropDown></DropDown>
       <Button title="Get Solar Data" onPress={() => {useApiData(setData,freq,latitude,longitude,parameter,startDate,endDate)}}/>
-      <Button 
+      
+      {/* <Button 
       title="Generate Chart"
       onPress = {(graph)=> {
-        
         setGraph(1)
-
         }}
-      />
+      /> */}
+      
       <GraphComponent value = {data} />
 
     </ScrollView>

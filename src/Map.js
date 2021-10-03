@@ -4,7 +4,7 @@ import React,{useState} from 'react';
 import {SyleSheet, Text, View,TextInput,Button,Dimensions} from 'react-native';
 import {styles} from './stylesheet.js';
 import { render } from 'react-dom';
-import HomeButton from './buttons.js';
+import {HomeButton} from './buttons.js';
 
 export const MapScreen = ({ navigation,route }) => {
 
