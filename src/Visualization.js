@@ -40,21 +40,20 @@ export const Graph = (props) => {
 
 const CustomTooltip = (props) => {
 
-return (
-
-
-
-  <TextSVG 
-  x={props.position["x"]}
-  y={props.position["y"]} 
-  fill={"white"} 
-  fontSize="16" 
-  fontWeight="bold"
-  backgroundColor="blue" 
-  textAnchor="middle">{props.value["meta"]}</TextSVG>
-)
-
-
+  if (typeof props.position !== 'undefined') {
+    return (
+      <TextSVG 
+      x={props.position["x"]}
+      y={props.position["y"]} 
+      fill={"white"} 
+      fontSize="16" 
+      fontWeight="bold"
+      backgroundColor="blue" 
+      textAnchor="middle">{props.value["meta"]}</TextSVG>
+    )
+  } else {
+    return null;
+  }
 }
 
 // Find graphing libary to display data

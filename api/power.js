@@ -27,7 +27,7 @@ export default function getApiData(setData,freq,latitude,longitude,parameter,sta
             "&start=" + formattedStartDate +
             "&end=" + formattedEndDate +
             "&format=JSON"
-  console.log(url);
+  
   axios.get(url).then(
     function (response) {
       var preparedData = {};
@@ -80,8 +80,9 @@ export default function getApiData(setData,freq,latitude,longitude,parameter,sta
         }
 
       }
-
-      console.log(preparedData);
+      
+      console.log(url);
+      console.log(preparedData["parameter"]);
       console.log(freq);
       setData(preparedData);
     }
