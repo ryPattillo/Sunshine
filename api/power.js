@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {format} from 'date-fns';
 
-
 export default function getApiData(setData,freq,latitude,longitude,parameter,startDate,endDate) {
 
 
@@ -26,7 +25,7 @@ export default function getApiData(setData,freq,latitude,longitude,parameter,sta
             "&start=" + formattedStartDate +
             "&end=" + formattedEndDate +
             "&format=JSON"
-  
+  console.log(url);
   axios.get(url).then(
     function (response) {
       var preparedData = {};
@@ -37,12 +36,29 @@ export default function getApiData(setData,freq,latitude,longitude,parameter,sta
 
       var xVal = 0;
       for (const [key, value] of Object.entries(response.data["properties"]["parameter"][parameter])) {
+
+        if (parseInt(key.slice(4,6)) > 12) { // skip the weird 13th month returned by API
+          continue;
+        }
+
+        var formattedDate = "";
+        if (freq == "daily") {
+          var dateString = key.slice(0,4)+"-"+key.slice(4,6)+"-"+key.slice(6,8)+"T23:45Z";
+          var date = new Date(dateString);
+          formattedDate = format(date, "MM/dd/yyyy");
+        } else {
+          console.log(key);
+          var dateString = key.slice(0,4)+"-"+key.slice(4,6)+"-01"+"T23:45Z";
+          var date = new Date(dateString);
+          formattedDate = format(date, "MMM, yyyy")
+        }
+
         xVal++;
-        preparedData["data"].push({x: xVal, y: value, meta: key})
+        preparedData["data"].push({x: xVal, y: value, meta: formattedDate});
       }
 
-      console.log(preparedData["parameter"]);
-      console.log(freq)
+      console.log(preparedData);
+      console.log(freq);
       setData(preparedData);
     }
   ).catch(function (error) {console.log(error);})
