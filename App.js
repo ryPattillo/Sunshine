@@ -44,10 +44,11 @@ const HomeScreen = ({navigation,route}) => {
   var latitude = coordinates["latitude"]
   var longitude = coordinates["longitude"]
 
-  var freq = "monthly"
+  var freq = "daily"
+  //var freq = "monthly"
   var parameter = "ALLSKY_SFC_SW_DWN"  // ALLSKY_SFC_LW_DWN
   var startDate = new Date("2020-01-01T23:45Z") // T and Z must be present
-  var endDate =  new Date("2020-12-31T23:45Z") // T and Z must be present
+  var endDate =  new Date("2020-01-31T23:45Z") // T and Z must be present
   //console.log(data);
   return (
     <ScrollView>

@@ -7,13 +7,14 @@ export const Graph = (props) => {
     
   // <VerticalAxis tickValues = {[]}/> , the array needs to be the dates
   // <HorizantalAxis tickValues = {[]}/>
-    //const first = Object.keys(props.data).at(0);
+    const first = parseInt(props.data[0]["x"]);
+    const last = parseInt(props.data[props.data.length - 1]["x"])
     return(
       <Chart
       style={{ height: 300, width: 400 }}
       data={props.data}
       padding={{ left: 40, bottom: 20, right: 20, top: 20 }}
-      xDomain={{ min: 202001, max: 202012}}
+      xDomain={{ min: first, max: last}}
       yDomain={{ min: 0, max: 10}}
     >
       <VerticalAxis tickCount={11} theme={{ labels: { formatter: (v) => v.toFixed(2) } }} />
