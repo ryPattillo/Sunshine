@@ -45,20 +45,21 @@ export const Graph = (props) => {
 
 
 const CustomTooltip = (props) => {
-if(props.position["x"]&&props.position["y"]){
-return (
-  <TextSVG 
-  x={props.position["x"]}
-  y={props.position["y"]-20} 
-  fill={"grey"} 
-  fontSize="12" 
-  fontWeight="bold"
-  backgroundColor="blue" 
-  textAnchor="middle">{props.value["meta"]+","+props.value["y"]}</TextSVG>
-)
-}
 
-
+  if (typeof props.position !== 'undefined') {
+    return (
+      <TextSVG 
+      x={props.position["x"]}
+      y={props.position["y"]} 
+      fill={"white"} 
+      fontSize="16" 
+      fontWeight="bold"
+      backgroundColor="blue" 
+      textAnchor="middle">{props.value["meta"]}</TextSVG>
+    )
+  } else {
+    return null;
+  }
 }
 
 // Find graphing libary to display data
