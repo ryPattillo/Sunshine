@@ -76,7 +76,7 @@ const HomeScreen = ({navigation,route}) => {
              setCoordinates(region)
             }}
           />
-      <Text style={{ textAlign: 'center', margin: 10 }}>Latitude: {latitude.toFixed(4)} Longitude: {longitude}</Text>
+      <Text style={{ textAlign: 'center', margin: 10 }}>Latitude: {latitude.toFixed(4)} Longitude: {longitude.toFixed(4)}</Text>
 
       <DropDown></DropDown>
       <Button 
