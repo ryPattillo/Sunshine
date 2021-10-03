@@ -3,7 +3,7 @@ const {format} = require('date-fns');
 
 import React, { useState } from 'react';
 
-export default function Api(setData,freq,latitude,longitude,parameter,startDate,endDate) {
+export default function getApiData(setData,freq,latitude,longitude,parameter,startDate,endDate) {
 
   if (freq == "montly") {
     var formattedStartDate = format(startDate, "yyyy")
@@ -30,7 +30,6 @@ export default function Api(setData,freq,latitude,longitude,parameter,startDate,
       preparedData["data"] = [];
 
       for (const [key, value] of Object.entries(response.data["properties"]["parameter"][parameter])) {
-
         preparedData["data"].push({x: key, y: value})
       }
       //console.log(preparedData)

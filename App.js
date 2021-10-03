@@ -1,7 +1,7 @@
 
 import React,{useState} from 'react';
 import { StyleSheet, Text, View,ScrollView,TextInput,Picker,Button, TouchableOpacity, Dimensions} from 'react-native';
-import Api from './api/power.js';
+import getApiData from './api/power.js';
 import {MapScreen} from './src/Map.js';
 import {HomeButton} from './src/buttons.js';
 import {Graph} from './src/Visualization.js';
@@ -34,6 +34,7 @@ const HomeScreen = ({navigation,route}) => {
   const [region,setRegion] = useState([])
   const [graph,setGraph] = useState(0)
   const [coordinates,setCoordinates] = useState({"latitude":51.5078788,"longitude":-0.0877321})
+  const [data, setData] = useState([]);
 
   var freq = "Hourly"
   var parameter = "CLRSKY_SFC_SW_DWN"
@@ -42,6 +43,13 @@ const HomeScreen = ({navigation,route}) => {
 
   var latitude = coordinates["latitude"]
   var longitude = coordinates["longitude"]
+
+  var freq = "daily"
+  var parameter = "ALLSKY_SFC_SW_DWN"  // ALLSKY_SFC_LW_DWN
+  var startDate = new Date("2021-01-01T23:45Z") // T and Z must be present
+  var endDate =  new Date("2021-12-31T23:45Z") // T and Z must be present
+  getApiData(setData,freq,latitude,longitude,parameter,startDate,endDate)
+  console.log(data);
 
   return (
     <ScrollView>
