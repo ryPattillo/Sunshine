@@ -2,9 +2,6 @@ import axios from 'axios';
 import {format} from 'date-fns';
 
 export default function getApiData(setData,freq,latitude,longitude,parameter,startDate,endDate) {
-
-
-
   //startDate= new Date("2020-01-01T23:45Z") // Initial Date
   //endDate= new Date("2020-05-31T23:45Z") // End Date
   startDate = new Date(startDate+"T23:45Z"); // Initial Date
@@ -57,7 +54,7 @@ export default function getApiData(setData,freq,latitude,longitude,parameter,sta
           weekTotal += value;
           if (day == 0) {
             var weekAvg = weekTotal / 7;
-            var weekLabel = key.slice(0,4) + " Week " + xVal;
+            var weekLabel = key.slice(0,4) + " Week " + getWeekOfyear(date);
             preparedData["data"].push({x: xVal, y: weekAvg, meta: weekLabel})
             // reset weekTotal and increment XVal
             weekTotal = 0;
@@ -87,4 +84,11 @@ export default function getApiData(setData,freq,latitude,longitude,parameter,sta
       setData(preparedData);
     }
   ).catch(function (error) {console.log(error);})
+}
+
+function getWeekOfyear(date) {
+  var oneJan = new Date(date.getFullYear(),0,1);
+  var numberOfDays = Math.floor((date - oneJan) / (24 * 60 * 60 * 1000));
+  var weekOfYear = Math.ceil((date.getDay() + 1 + numberOfDays) / 7);
+  return weekOfYear;
 }
