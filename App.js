@@ -1,6 +1,6 @@
 
 import React,{useState} from 'react';
-import { StyleSheet, Text, View,ScrollView,TextInput,Button, TouchableOpacity, Dimensions} from 'react-native';
+import { StyleSheet, Text, View,ScrollView,TextInput,Picker,Button, TouchableOpacity, Dimensions} from 'react-native';
 import Api from './api/power.js';
 import {MapScreen} from './src/Map.js';
 import {HomeButton} from './src/buttons.js';
@@ -55,7 +55,7 @@ const HomeScreen = ({navigation,route}) => {
         })}}
       />
 
-      <MapView style= {styles.map}
+      {/* <MapView style= {styles.map}
         //customMapStyle={mapDarkStyle}
         initialRegion={{
           latitude: 51.5078788,
@@ -68,7 +68,7 @@ const HomeScreen = ({navigation,route}) => {
 
         <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />
           
-        </MapView>
+        </MapView> */}
           
         <HomeButton style={styles.button}
             text="Select Location"
@@ -76,14 +76,14 @@ const HomeScreen = ({navigation,route}) => {
              setCoordinates(region)
             }}
           />
-      <Text style={{ textAlign: 'center', margin: 10 }}>Latitude: {latitude.toFixed(4)} Longitude: {longitude.toFixed(4)}</Text>
+      <Text style={{ textAlign: 'center', margin: 10 }}>Latitude: {latitude.toFixed(4)} Longitude: {longitude}</Text>
 
+      <DropDown></DropDown>
       <Button 
       title="Generate Chart"
       onPress = {(graph)=> {
         
         setGraph(1)
-        
 
         }}
       />
@@ -108,6 +108,25 @@ data = {[
 /> )}
 else return null
 
+}
+
+
+const DropDown = () => {
+  const [selectedValue, setSelectedValue] = useState("java");
+  return (
+    <View style={styles.container}>
+      <Picker
+        selectedValue={selectedValue}
+        style={{ height: 30, width: 200}}
+        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+      >
+        <Picker.Item label="Parameter 1" value="p1" />
+        <Picker.Item label="Parameter 2" value="p2" />
+        <Picker.Item label="Parameter 3" value="p3" />
+        <Picker.Item label="Parameter 4" value="p4" />
+      </Picker>
+    </View>
+  );
 }
 
 // Will return the selected coordinates
