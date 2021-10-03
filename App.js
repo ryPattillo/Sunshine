@@ -1,7 +1,7 @@
 
 import React,{useState} from 'react';
-import { StyleSheet, Text, View,ScrollView,TextInput,Button, TouchableOpacity, Dimensions} from 'react-native';
-import Api from './api/power.js';
+import { StyleSheet, Text, View,ScrollView,TextInput,Picker,Button, TouchableOpacity, Dimensions} from 'react-native';
+import getApiData from './api/power.js';
 import {MapScreen} from './src/Map.js';
 import {HomeButton} from './src/buttons.js';
 import {Graph} from './src/Visualization.js';
@@ -34,6 +34,7 @@ const HomeScreen = ({navigation,route}) => {
   const [region,setRegion] = useState([])
   const [graph,setGraph] = useState(0)
   const [coordinates,setCoordinates] = useState({"latitude":51.5078788,"longitude":-0.0877321})
+  const [data, setData] = useState([]);
 
   var freq = "Hourly"
   var parameter = "CLRSKY_SFC_SW_DWN"
@@ -43,6 +44,12 @@ const HomeScreen = ({navigation,route}) => {
   var latitude = coordinates["latitude"]
   var longitude = coordinates["longitude"]
 
+  var freq = "daily"
+  var parameter = "ALLSKY_SFC_SW_DWN"  // ALLSKY_SFC_LW_DWN
+  var startDate = new Date("2021-01-01T23:45Z") // T and Z must be present
+  var endDate =  new Date("2021-12-31T23:45Z") // T and Z must be present
+  getApiData(setData,freq,latitude,longitude,parameter,startDate,endDate)
+  console.log(data);
   return (
     <ScrollView>
    
@@ -55,7 +62,7 @@ const HomeScreen = ({navigation,route}) => {
         })}}
       />
 
-      <MapView style= {styles.map}
+      {/* <MapView style= {styles.map}
         //customMapStyle={mapDarkStyle}
         initialRegion={{
           latitude: 51.5078788,
@@ -68,7 +75,7 @@ const HomeScreen = ({navigation,route}) => {
 
         <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />
           
-        </MapView>
+        </MapView> */}
           
         <HomeButton style={styles.button}
             text="Select Location"
@@ -78,12 +85,14 @@ const HomeScreen = ({navigation,route}) => {
           />
       <Text style={{ textAlign: 'center', margin: 10 }}>Latitude: {latitude.toFixed(4)} Longitude: {longitude.toFixed(4)}</Text>
 
+      <DropDown></DropDown>
       <Button 
       title="Generate Chart"
       onPress = {(graph)=> {
         
         setGraph(1)
       
+
         }}
       />
       <GraphComponent value = {graph} />
@@ -107,6 +116,25 @@ data = {[
 /> )}
 else return null
 
+}
+
+
+const DropDown = () => {
+  const [selectedValue, setSelectedValue] = useState("java");
+  return (
+    <View style={styles.container}>
+      <Picker
+        selectedValue={selectedValue}
+        style={{ height: 30, width: 200}}
+        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+      >
+        <Picker.Item label="Parameter 1" value="p1" />
+        <Picker.Item label="Parameter 2" value="p2" />
+        <Picker.Item label="Parameter 3" value="p3" />
+        <Picker.Item label="Parameter 4" value="p4" />
+      </Picker>
+    </View>
+  );
 }
 
 // Will return the selected coordinates

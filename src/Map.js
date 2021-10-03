@@ -8,7 +8,7 @@ import {HomeButton} from './buttons.js';
 
 export const MapScreen = ({ navigation,route }) => {
 
-    [region,setRegion] = useState([])
+    const [region,setRegion] = useState([])
 
     return (
         <MapView style= {styles.map2}
