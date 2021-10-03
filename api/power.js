@@ -1,21 +1,40 @@
 import axios from 'axios';
+const {format} = require('date-fns');
 
-export default function Api(freq,setData,latitude,longitude,paramter,startDate,endDate) {
+import React, { useState } from 'react';
 
-    url = "https://power.larc.nasa.gov/api/"+freq+"point?start="+startDate+"&end="+endDate+"&latitude="+latitude+"longitude="+longitude+"&community=ag&parameters="+parameter+"user=ryan&header=true&time-standard=lst"
+export default function Api(setData,freq,latitude,longitude,parameter,startDate,endDate) {
 
-
-    axios.get(
-      url
-    )
-    .then(function (response) {
-      // handle success
-      console.log(response["data"]["properties"]["parameter"]["CLRSKY_SFC_SW_DWN"]["2021090410"])
-      setData(response["data"]["properties"]["parameter"]["CLRSKY_SFC_SW_DWN"]["2021090410"])
-        //response["data"]["properties"]
-    })
-    .catch(function (error) {
-        console.log(error);
-    })
-  
+  if (freq == "montly") {
+    var formattedStartDate = format(startDate, "yyyy")
+    var formattedEndDate = format(endDate, "yyyy")
+  } else if (freq == "daily") {
+    var formattedStartDate = format(startDate, "yyyyMMdd")
+    var formattedEndDate = format(endDate, "yyyyMMdd")
   }
+  
+  var url = "https://power.larc.nasa.gov/api/temporal/" + freq +
+            "/point?parameters=" + parameter +
+            "&community=RE&longitude=" + longitude +
+            "&latitude=" + latitude +
+            "&start=" + formattedStartDate +
+            "&end=" + formattedEndDate +
+            "&format=JSON"
+
+  axios.get(url).then(
+    function (response) {
+      var preparedData = {};
+      preparedData["coordinates"] = response.data["geometry"]["coordinates"];
+      preparedData["parameter"] = response.data["parameters"][parameter]["longname"];
+      preparedData["units"] = response.data["parameters"][parameter]["units"];
+      preparedData["data"] = [];
+
+      for (const [key, value] of Object.entries(response.data["properties"]["parameter"][parameter])) {
+
+        preparedData["data"].push({x: key, y: value})
+      }
+      //console.log(preparedData)
+      setData(response.data["properties"])
+    }
+  ).catch(function (error) {console.log(error);})
+}
