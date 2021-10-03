@@ -33,7 +33,7 @@ export default function getApiData(setData,freq,latitude,longitude,parameter,sta
         preparedData["data"].push({x: key, y: value})
       }
       //console.log(preparedData)
-      setData(response.data["properties"])
+      setData(preparedData)
     }
   ).catch(function (error) {console.log(error);})
 }

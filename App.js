@@ -50,7 +50,6 @@ const HomeScreen = ({navigation,route}) => {
   var endDate =  new Date("2021-12-31T23:45Z") // T and Z must be present
   getApiData(setData,freq,latitude,longitude,parameter,startDate,endDate)
   console.log(data);
-
   return (
     <ScrollView>
    
