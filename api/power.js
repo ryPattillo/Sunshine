@@ -35,8 +35,10 @@ export default function getApiData(setData,freq,latitude,longitude,parameter,sta
       preparedData["units"] = response.data["parameters"][parameter]["units"];
       preparedData["data"] = [];
 
+      var xVal = 0;
       for (const [key, value] of Object.entries(response.data["properties"]["parameter"][parameter])) {
-        preparedData["data"].push({x: key, y: value})
+        xVal++;
+        preparedData["data"].push({x: xVal, y: value, meta: key})
       }
 
       console.log(preparedData["parameter"]);
