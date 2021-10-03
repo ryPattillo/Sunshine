@@ -70,7 +70,6 @@ export const styles = StyleSheet.create({
     graphView:{
     
       marginBottom: 500,
-
       width: Dimensions.get('window').width,
       height: Dimensions.get('window').height/2
     },

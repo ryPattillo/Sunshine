@@ -80,7 +80,6 @@ export default function getApiData(setData,freq,latitude,longitude,parameter,sta
         }
 
       }
-      
       console.log(url);
       console.log(preparedData["parameter"]);
       console.log(freq);

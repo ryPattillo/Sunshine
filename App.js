@@ -85,7 +85,7 @@ const HomeScreen = ({navigation,route}) => {
       <View style={styles.inputContainer}>
          <TextInput
             label="Start Date"
-          
+        
             left={<TextInput.Icon name="calendar" />}  
             placeholder={"yyyy-mm-dd"}
             onChangeText={setStartDate}
