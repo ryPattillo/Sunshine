@@ -83,8 +83,7 @@ const HomeScreen = ({navigation,route}) => {
       onPress = {(graph)=> {
         
         setGraph(1)
-        
-
+      
         }}
       />
       <GraphComponent value = {graph} />
@@ -100,10 +99,10 @@ if(props.value == 1) {
 return (
 <Graph
 data = {[
-  {x: 1, y: 13000},
-  {x: 2, y: 16500},
-  {x: 3, y: 14250},
-  {x: 4,y: 19000},
+  {x: 1, y: 13},
+  {x: 2, y: 16},
+  {x: 3, y: 14},
+  {x: 4 ,y: 19},
 ]}
 /> )}
 else return null
