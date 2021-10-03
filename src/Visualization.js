@@ -1,6 +1,6 @@
 import { Chart, Line, Area, HorizontalAxis, VerticalAxis,Tooltip } from 'react-native-responsive-linechart'
 import { StyleSheet, Text, View,ScrollView,Picker,Button, TouchableOpacity, Dimensions} from 'react-native';
-
+import { Rect, Text as TextSVG, Svg } from "react-native-svg";
 
 
 import {styles} from './stylesheet.js';
@@ -18,7 +18,7 @@ export const Graph = (props) => {
         <Chart
           style={{width:Dimensions.get('window').width,height:Dimensions.get('window').height/2
         }}
-          data={[{x:1,y:1},{x:2,y:3}]}
+          data={props.data}
           padding={{ left: 40, bottom: 40, right: 30, top: 20 }}
           xDomain={{ min: first, max: last}}
           yDomain={{ min: 0, max: 10}}
@@ -29,15 +29,33 @@ export const Graph = (props) => {
           <HorizontalAxis tickCount={2} />
           <Area theme={{ gradient: { from: { color: '#ffa502' }, to: { color: '#ffa502', opacity: 0.4 } }}} />
           <Line tooltipComponent={
-          <Tooltip 
-          label="test" 
-          />} theme={{ stroke: { color: '#ffa502', width: 5 }, scatter: { default: { width: 4, height: 4, rx: 2 }} }} />
+            <CustomTooltip/>
+          } theme={{ stroke: { color: '#ffa502', width: 5 }, scatter: { default: { width: 4, height: 4, rx: 2 }} }} />
       </Chart>
       </ScrollView>
         );
   
 }
 
+
+const CustomTooltip = (props) => {
+
+return (
+
+
+
+  <TextSVG 
+  x={props.position["x"]}
+  y={props.position["y"]} 
+  fill={"white"} 
+  fontSize="16" 
+  fontWeight="bold"
+  backgroundColor="blue" 
+  textAnchor="middle">{props.value["meta"]}</TextSVG>
+)
+
+
+}
 
 // Find graphing libary to display data
 
