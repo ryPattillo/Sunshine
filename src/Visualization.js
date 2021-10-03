@@ -11,6 +11,7 @@ export const Graph = (props) => {
     
     const first = parseInt(props.data[0]["x"]);
     const last = parseInt(props.data[props.data.length - 1]["x"])
+    const [selection,setSelection] = []
   
     return(
       
@@ -32,7 +33,12 @@ export const Graph = (props) => {
             <CustomTooltip/>
           } theme={{ stroke: { color: '#ffa502', width: 5 }, scatter: { default: { width: 4, height: 4, rx: 2 }} }} />
       </Chart>
+
+      <View>
+        
+      </View>
       </ScrollView>
+
         );
   
 }
@@ -41,18 +47,16 @@ export const Graph = (props) => {
 const CustomTooltip = (props) => {
 
 return (
-
-
-
   <TextSVG 
   x={props.position["x"]}
-  y={props.position["y"]} 
-  fill={"white"} 
-  fontSize="16" 
+  y={props.position["y"]-5} 
+  fill={"black"} 
+  fontSize="12" 
   fontWeight="bold"
   backgroundColor="blue" 
-  textAnchor="middle">{props.value["meta"]}</TextSVG>
+  textAnchor="middle">{"Date:"+props.value["meta"]+"\n"+props.value["y"]}</TextSVG>
 )
+
 
 
 }

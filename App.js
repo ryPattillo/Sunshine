@@ -35,9 +35,8 @@ const HomeScreen = ({navigation,route}) => {
   const [parameter, setParameter] = useState("None Selected"); // Parameters
   const [freq, setFreq] = useState("None Selected"); // Frequency
 
-  if(route.params?.coordinates)
-   setCoordinates({"latitude":route.params.coordinates[0],"longitude":route.params.coordinates[1]})
-
+  //if(route.params?.coordinates)
+   //setCoordinates({"latitude":route.params.coordinates[0],"longitude":route.params.coordinates[1]})
 
   var latitude = coordinates["latitude"]
   var longitude = coordinates["longitude"]
@@ -153,23 +152,5 @@ if(Object.keys(props.value).length > 0) {
   else return null
 }
 
-
-const DropDown = () => {
-  const [selectedValue, setSelectedValue] = useState("java");
-  return (
-
-      <Picker
-        selectedValue={selectedValue}
-        style={{ height: 30, width: 200}}
-        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-      >
-        <Picker.Item label="Parameter 1" value="p1" />
-        <Picker.Item label="Parameter 2" value="p2" />
-        <Picker.Item label="Parameter 3" value="p3" />
-        <Picker.Item label="Parameter 4" value="p4" />
-      </Picker>
-
-  );
-}
 
 // Will return the selected coordinates
