@@ -1,6 +1,6 @@
 
 import React,{useState} from 'react';
-import { Text,View,ScrollView,Picker} from 'react-native';
+import { Text,View,ScrollView,Button} from 'react-native';
 import { TextInput,List,Card,} from 'react-native-paper';
 import useApiData from './api/power.js';
 import {MapScreen} from './src/Map.js';
@@ -11,6 +11,7 @@ import {styles} from './src/stylesheet.js';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {format} from 'date-fns';
 
 export default function App() {
 
@@ -34,17 +35,21 @@ const HomeScreen = ({navigation,route}) => {
   const [endDate, setEndDate] = useState(new Date("2020-05-31T23:45Z")); // End Date
   const [parameter, setParameter] = useState("Choose Parameter"); // Parameters
   const [freq, setFreq] = useState("Choose Frequency"); // Frequency
+  const [showStartPicker, setShowStartPicker] = useState(false);
+  const [showEndPicker, setShowEndPicker] = useState(false);
   var names={"CLRSKY_SFC_SW_DWN":"Clear Sky Surface Shortwave Downward Irradiance","Choose Parameter":"Choose Parameter","ALLSKY_SFC_SW_DWN":"All Sky Surface Shortwave Downward Irradiance"}
 
   var latitude = coordinates["latitude"]
   var longitude = coordinates["longitude"]
+
+
 
   return (
 
     <ScrollView>
       <View>
         
-        <MapView style= {styles.map}
+        {/* <MapView style= {styles.map}
 
           onPress = {()=> {
             navigation.navigate({
@@ -59,7 +64,7 @@ const HomeScreen = ({navigation,route}) => {
              }} 
             onRegionChangeComplete={region => setRegion(region) }>
             <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />  
-        </MapView>  
+        </MapView>   */}
           
         <HomeButton 
             text="Select Location"
@@ -79,28 +84,37 @@ const HomeScreen = ({navigation,route}) => {
 
    
       <View style={styles.inputContainer}>
-      <View style ={{flex:0.5}}>
-      <Text style>Start Date</Text>
-      <DateTimePicker
-          testID="dateTimePicker"
-          value={startDate}
-          display="default"
-          onChange={(event, value) => {
-            setStartDate(new Date(value))
-            }}
-        />
+        <View style ={{flex:0.5}}>
+          <View>
+            <Button onPress={() => {setShowStartPicker(true)}} title={"From: "+format(startDate, "dd/MM/yyyy")} />
+          </View>
+          {showStartPicker && (
+            <DateTimePicker
+                testID="dateTimePicker"
+                value={startDate}
+                display="default"
+                onChange={(event, value) => {
+                  setStartDate(new Date(value));
+                  setShowStartPicker(Platform.OS === 'ios');
+                  }}
+              />
+          )}
         </View>
-         <View style ={{flex:0.5}}>
-           <Text>End Date</Text>
-        <DateTimePicker
-          
-          testID="dateTimePicker"
-          value={endDate}
-          display="default"
-          onChange={(event, value) => {
-            setEndDate(new Date(value))
-            }}
-        />
+        <View style ={{flex:0.5}}>
+          <View>
+            <Button onPress={() => {setShowEndPicker(true)}} title={"To: "+format(endDate, "dd/MM/yyyy")} />
+          </View>
+          {showEndPicker && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={endDate}
+            display="default"
+            onChange={(event, value) => {
+              setEndDate(new Date(value));
+              setShowEndPicker(Platform.OS === 'ios');
+              }}
+            />
+           )}
         </View>
 
 </View>
