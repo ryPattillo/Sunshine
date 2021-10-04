@@ -1,6 +1,8 @@
-# SUNNAR app
+# Too Bright app
+## We Are the Sunshiners!
+![logo](https://github.com/ryPattillo/Sunshine/blob/master/Sunshiners.png)
 
-## How to run Application on device
+## How to run Application on your device
 
 <!-- - Install [Expo Go](https://expo.dev/client) application on mobile device -->
 - Must have Node.js installed on local computer
