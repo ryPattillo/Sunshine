@@ -1,4 +1,5 @@
 
+import { roundToNearestMinutesWithOptions } from 'date-fns/fp';
 import {StyleSheet, Text, View,TextInput,Button,Dimensions} from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -14,15 +15,25 @@ export const styles = StyleSheet.create({
     },
     map2:{
       width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height,
+      height: Dimensions.get('window').height-170,
     },
     button:{
       //borderRadius:2,
       paddingVertical:14,
       backgroundColor:'#007AFF',
     },
+    bottomButton:{
+      borderRadius:8,
+      paddingVertical:14,
+      backgroundColor:'#007AFF',
+    },
+    sunButton:{
+      //borderRadius:2,
+      paddingVertical:14,
+      backgroundColor:"#FFC628",
+    },
     button1:{
-      //position: "center",
+  
       width: 60,
       height: 60,
       borderRadius: 60/2,
@@ -30,16 +41,32 @@ export const styles = StyleSheet.create({
       justifyContent:"center",
       shadowRadius:10,
       shadowColor:"#007AFF",
-      //shadowOpacity:0.3,
-      //shadowOffset:{height:10}
-
+      
     },
-
+    bottomText:{
+      color:'white',
+      fontWeight: 'bold',
+      textTransform: 'uppercase',
+      fontSize: 20,
+      textAlign: 'center',
+    },
+    bottomTextPadding:{
+      paddingVertical:3,
+    },
     inputContainer: 
       {
+        flexDirection:'row',
+        flex:1,
+        borderColor:"#007AFF",
+        
         height:Dimensions.get('window').height/11,
         width:Dimensions.get('window').width,
-        padding: 5
+        paddingTop: 10,
+        paddingLeft:30,
+      
+      },
+      footer:{
+        height: 100,
       },
 
       dropDownContainer: 

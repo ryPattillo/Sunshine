@@ -1,6 +1,6 @@
 import { Chart, Line, Area, HorizontalAxis, VerticalAxis,Tooltip } from 'react-native-responsive-linechart'
 import { StyleSheet, Text, View,ScrollView,Picker,Button, TouchableOpacity, Dimensions} from 'react-native';
-import { Rect, Text as TextSVG, Svg } from "react-native-svg";
+import { Rect, Text as TextSVG, Svg,TSpan } from "react-native-svg";
 
 
 import {styles} from './stylesheet.js';
@@ -50,18 +50,28 @@ export const Graph = (props) => {
 const CustomTooltip = (props) => {
 
   if (typeof props.position!== 'undefined') {
+
+
     return (
-      <TextSVG 
-      x={props.position["x"]}
-      y={props.position["y"]-10} 
-      fill={"grey"} 
-      fontSize="12" 
-      fontWeight="bold"
-      backgroundColor="blue" 
-      >{props.value["meta"] + ":"+
-       props.value["y"].toFixed(2) + "kW-hr/m^2/day"}</TextSVG>
-    )
-  } else {
+
+      <View 
+      style={{
+        position: 'absolute',
+        left: props.position["x"],
+        top: props.position["y"]-30,
+        backgroundColor:"gray",
+        borderRadius:5,
+        padding:2,
+        fontWeight: 'bold',
+
+      }}>
+        <Text style = {{
+          color: "white",
+        }}>{ props.value["meta"] +  "\n" +
+         props.value["y"].toFixed(2) + "kW-hr/m^2/day"}</Text>
+    </View>
+    )} 
+   else {
     return null;
   }
 }

@@ -4,8 +4,9 @@ import {format} from 'date-fns';
 export default function getApiData(setData,freq,latitude,longitude,parameter,startDate,endDate) {
   //startDate= new Date("2020-01-01T23:45Z") // Initial Date
   //endDate= new Date("2020-05-31T23:45Z") // End Date
-  startDate = new Date(startDate+"T23:45Z"); // Initial Date
-  endDate = new Date(endDate+"T23:45Z"); // End Date
+
+  console.log(startDate)
+ 
 
   if (freq == "monthly") {
     var formattedStartDate = format(startDate, "yyyy");

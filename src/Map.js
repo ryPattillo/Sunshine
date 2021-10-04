@@ -4,13 +4,20 @@ import React,{useState} from 'react';
 import {SyleSheet, Text, View,TextInput,Button,Dimensions} from 'react-native';
 import {styles} from './stylesheet.js';
 import { render } from 'react-dom';
-import {HomeButton} from './buttons.js';
+import {BottomButton, HomeButton} from './buttons.js';
 
 export const MapScreen = ({ navigation,route }) => {
 
-    const [region,setRegion] = useState([])
+const[region,setRegion] = useState([])
 
-    return (
+
+
+return (
+
+    <View>
+
+      <View styles={styles.contentContainer}>
+
         <MapView style= {styles.map2}
           
           initialRegion={{
@@ -19,24 +26,25 @@ export const MapScreen = ({ navigation,route }) => {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }} 
-          onRegionChangeComplete={region => setRegion(region)}
-     
+          onRegionChangeComplete={region => setRegion(region)} 
           >
-          <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />
-          <HomeButton style={styles.button}
-            text="Select"
-            onPress={() => {
-              // Pass and merge params back to home screen
-              //alert("You pressed a button!")
-              navigation.navigate({
-                name: 'Home',
-                params: { coordinates: [region["latitude"] ,region["longitude"] ]},
-              });
-            }}
-          />
-        
+          <Marker coordinate={{ "latitude": region["latitude"], "longitude": region["longitude"] }} />
           </MapView>
-          )
-    
+        <BottomButton
+          text="Select Location"
+          style="styles.button1"
+          onPress={() => {
+            // Pass and merge params back to home screen
+            //alert("You pressed a button!")
+            navigation.navigate({
+              name: 'SUNSHINE',
+              params: { coordinates: [region["latitude"] ,region["longitude"] ]},
+            });
+          }}
+        />
+      </View>
         
-    }
+    </View>
+)
+    
+}

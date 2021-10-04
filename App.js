@@ -1,15 +1,17 @@
 
 import React,{useState} from 'react';
-import { View,ScrollView,Picker} from 'react-native';
+import { Text,View,ScrollView,Picker} from 'react-native';
 import { TextInput,List,Card,} from 'react-native-paper';
 import useApiData from './api/power.js';
 import {MapScreen} from './src/Map.js';
-import {HomeButton} from './src/buttons.js';
+import {HomeButton,SunButton} from './src/buttons.js';
 import {Graph} from './src/Visualization.js';
 import MapView,{Marker} from 'react-native-maps';
 import {styles} from './src/stylesheet.js';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
 
 
 
@@ -19,7 +21,7 @@ export default function App() {
     return (
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="SUNSHINE" component={HomeScreen} />
           <Stack.Screen name="Map" component={MapScreen} />
         </Stack.Navigator>
       </NavigationContainer>
@@ -46,15 +48,14 @@ const HomeScreen = ({navigation,route}) => {
 
     <ScrollView>
       <View>
-        <HomeButton
-          text='Expand Map'
+        
+        <MapView style= {styles.map}
+
           onPress = {()=> {
             navigation.navigate({
               name: 'Map',
               params: { coordinates: [region["latitude"] ,region["longitude"] ]},
             })}}
-        />
-       {/* <MapView style= {styles.map}
            initialRegion={{
               latitude: 51.5078788,
               longitude: -0.0877321,
@@ -63,9 +64,9 @@ const HomeScreen = ({navigation,route}) => {
              }} 
             onRegionChangeComplete={region => setRegion(region) }>
             <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />  
-        </MapView>  */}
+        </MapView>  
           
-        <HomeButton style={styles.button}
+        <HomeButton 
             text="Select Location"
             onPress={() => {
              setCoordinates(region)
@@ -74,7 +75,7 @@ const HomeScreen = ({navigation,route}) => {
       
       </View>
 
-      <View style = {styles.inputContainer}>
+      <View>
         <Card.Title
           title={latitude.toFixed(6) +" , " +longitude.toFixed(6)}
           left={(props) => <TextInput.Icon name="map" />} 
@@ -83,27 +84,32 @@ const HomeScreen = ({navigation,route}) => {
 
    
       <View style={styles.inputContainer}>
-         <TextInput
-            label="Start Date"
-        
-            left={<TextInput.Icon name="calendar" />}  
-            placeholder={"yyyy-mm-dd"}
-            onChangeText={setStartDate}
-            value={startDate}
-          />
+      <View style ={{flex:0.5}}>
+      <Text style>Start Date</Text>
+      <DateTimePicker
+          testID="dateTimePicker"
+          value={startDate}
+          display="default"
+          onChange={(event, value) => {
+            setStartDate(new Date(value))
+            }}
+        />
         </View>
-      
-        <View style={styles.inputContainer}>
-          <TextInput
+         <View style ={{flex:0.5}}>
+           <Text>End Date</Text>
+        <DateTimePicker
           
-            left={<TextInput.Icon name="calendar" 
-              />}
-            placeholder={"yyyy-mm-dd"}
-            onChangeText={setEndDate}
-            value={endDate}
-          />
+          testID="dateTimePicker"
+          value={endDate}
+          display="default"
+          onChange={(event, value) => {
+            setEndDate(new Date(value))
+            }}
+        />
         </View>
 
+</View>
+       
         <View style={styles.dropDownContainer}>
           <List.AccordionGroup>
             <List.Accordion title={names[parameter]} id="1">
@@ -134,7 +140,7 @@ const HomeScreen = ({navigation,route}) => {
           </List.AccordionGroup>
       </View>
 
-      <HomeButton style={styles.button}
+      <SunButton 
             text="Graph My Sunshine!"
             onPress={() => {
             useApiData(setData,freq,coordinates["latitude"],coordinates["longitude"],parameter,startDate,endDate)
