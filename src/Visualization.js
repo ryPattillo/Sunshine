@@ -1,7 +1,5 @@
-import { Chart, Line, Area, HorizontalAxis, VerticalAxis,Tooltip } from 'react-native-responsive-linechart'
-import { StyleSheet, Text, View,ScrollView,Picker,Button, TouchableOpacity, Dimensions} from 'react-native';
-import { Rect, Text as TextSVG, Svg,TSpan } from "react-native-svg";
-
+import { Chart, Line, Area, HorizontalAxis, VerticalAxis} from 'react-native-responsive-linechart'
+import { Text, View,ScrollView, Dimensions} from 'react-native';
 
 import {styles} from './stylesheet.js';
 

@@ -1,10 +1,9 @@
 
 import MapView,{Marker} from 'react-native-maps';
 import React,{useState} from 'react';
-import {SyleSheet, Text, View,TextInput,Button,Dimensions} from 'react-native';
+import {View} from 'react-native';
 import {styles} from './stylesheet.js';
-import { render } from 'react-dom';
-import {BottomButton, HomeButton} from './buttons.js';
+import {BottomButton} from './buttons.js';
 
 export const MapScreen = ({ navigation,route }) => {
 
@@ -17,7 +16,6 @@ return (
     <View>
 
       <View styles={styles.contentContainer}>
-
         <MapView style= {styles.map2}
           
           initialRegion={{
@@ -34,8 +32,6 @@ return (
           text="Select Location"
           style="styles.button1"
           onPress={() => {
-            // Pass and merge params back to home screen
-            //alert("You pressed a button!")
             navigation.navigate({
               name: 'SUNSHINE',
               params: { coordinates: [region["latitude"] ,region["longitude"] ]},
