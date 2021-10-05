@@ -11,7 +11,7 @@ export const Graph = (props) => {
     const last = parseInt(props.data[props.data.length - 1]["x"])
     var datapoints = props.data.length
     var width = Dimensions.get('window').width
-    width = (datapoints > 30) ? width + (width/30 * datapoints) : width;
+    width = (datapoints > 30) ? width/30 * datapoints : width;
     const screenWidth = width; 
   
     return(

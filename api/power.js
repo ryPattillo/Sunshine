@@ -2,9 +2,6 @@ import axios from 'axios';
 import {format} from 'date-fns';
 
 export default function getApiData(setData,freq,latitude,longitude,parameter,startDate,endDate) {
-
-  console.log(startDate)
- 
   if (freq == "monthly") {
     var formattedStartDate = format(startDate, "yyyy");
     var formattedEndDate = format(endDate, "yyyy");
@@ -52,7 +49,7 @@ export default function getApiData(setData,freq,latitude,longitude,parameter,sta
           weekTotal += value;
           if (day == 0) {
             var weekAvg = weekTotal / 7;
-            var weekLabel = key.slice(0,4) + " Week " + getWeekOfyear(date);
+            var weekLabel = key.slice(0,4) + " Week " + (getWeekOfyear(date) - 1);
             preparedData["data"].push({x: xVal, y: weekAvg, meta: weekLabel})
             // reset weekTotal and increment XVal
             weekTotal = 0;
