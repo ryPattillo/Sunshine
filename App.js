@@ -49,8 +49,7 @@ const HomeScreen = ({navigation,route}) => {
     <ScrollView>
       <View>
         
-        {/* <MapView style= {styles.map}
-
+        <MapView style= {styles.map}
           onPress = {()=> {
             navigation.navigate({
               name: 'Map',
@@ -64,7 +63,7 @@ const HomeScreen = ({navigation,route}) => {
              }} 
             onRegionChangeComplete={region => setRegion(region) }>
             <Marker coordinate={{ latitude: region["latitude"], longitude: region["longitude"] }} />  
-        </MapView>   */}
+        </MapView>  
           
         <HomeButton 
             text="Select Location"
@@ -90,14 +89,14 @@ const HomeScreen = ({navigation,route}) => {
           </View>
           {showStartPicker && (
             <DateTimePicker
-                testID="dateTimePicker"
-                value={startDate}
-                display="default"
-                onChange={(event, value) => {
-                  setStartDate(new Date(value));
-                  setShowStartPicker(Platform.OS === 'ios');
-                  }}
-              />
+              testID="dateTimePicker"
+              value={startDate}
+              display="default"
+              onChange={(event, value) => {
+                setShowStartPicker(Platform.OS === 'ios');
+                setStartDate(new Date(value));
+              }}
+            />
           )}
         </View>
         <View style ={{flex:0.5}}>
@@ -105,13 +104,13 @@ const HomeScreen = ({navigation,route}) => {
             <Button onPress={() => {setShowEndPicker(true)}} title={"To: "+format(endDate, "dd/MM/yyyy")} />
           </View>
           {showEndPicker && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={endDate}
-            display="default"
-            onChange={(event, value) => {
-              setEndDate(new Date(value));
-              setShowEndPicker(Platform.OS === 'ios');
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={endDate}
+              display="default"
+              onChange={(event, value) => {
+                setShowEndPicker(Platform.OS === 'ios');
+                setEndDate(new Date(value));
               }}
             />
            )}
