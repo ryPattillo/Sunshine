@@ -59,7 +59,7 @@ export const styles = StyleSheet.create({
         flex:1,
         borderColor:"#007AFF",
         
-        height:Dimensions.get('window').height/11,
+        height:Dimensions.get('window').height/20,
         width:Dimensions.get('window').width,
         paddingTop: 10,
         paddingLeft:30,

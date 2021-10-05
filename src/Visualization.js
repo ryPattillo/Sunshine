@@ -61,7 +61,6 @@ const CustomTooltip = (props) => {
         borderRadius:5,
         padding:2,
         fontWeight: 'bold',
-
       }}>
         <Text style = {{
           color: "white",

@@ -37,10 +37,15 @@ const HomeScreen = ({navigation,route}) => {
   const [freq, setFreq] = useState("Choose Frequency"); // Frequency
   const [showStartPicker, setShowStartPicker] = useState(false);
   const [showEndPicker, setShowEndPicker] = useState(false);
+  const [expandedParam, setExpandedParam] = useState(false);
+  const [expandedFreq, setExpandedFreq] = useState(false);
   var names={"CLRSKY_SFC_SW_DWN":"Clear Sky Surface Shortwave Downward Irradiance","Choose Parameter":"Choose Parameter","ALLSKY_SFC_SW_DWN":"All Sky Surface Shortwave Downward Irradiance"}
 
   var latitude = coordinates["latitude"]
   var longitude = coordinates["longitude"]
+
+  const handleParamPress = () => setExpandedParam(!expandedParam);
+  const handleFreqPress = () => setExpandedFreq(!expandedFreq);
 
   return (
 
@@ -113,37 +118,40 @@ const HomeScreen = ({navigation,route}) => {
             />
            )}
         </View>
+      </View>
 
-</View>
-       
-        <View style={styles.dropDownContainer}>
-          <List.AccordionGroup>
-            <List.Accordion title={names[parameter]} id="1">
-              <List.Item 
-              title={names["CLRSKY_SFC_SW_DWN"]}
-              onPress = {() => {setParameter("CLRSKY_SFC_SW_DWN") }} />
-              <List.Item 
-              title={names["ALLSKY_SFC_SW_DWN"]}
-              onPress = {() => {setParameter("ALLSKY_SFC_SW_DWN") }} />
-            </List.Accordion>
-          </List.AccordionGroup>
-        </View>
-   
-    
-         <View style={styles.dropDownContainer}>
-          <List.AccordionGroup>
-            <List.Accordion title={freq} id="1">
-              <List.Item 
-              title="daily"
-              onPress = {() => {setFreq("daily") }} />
-              <List.Item 
-              title="weekly"
-              onPress = {() => {setFreq("weekly") }} />
-              <List.Item 
-              title="monthly"
-              onPress = {() => {setFreq("monthly") }} />
-            </List.Accordion>
-          </List.AccordionGroup>
+      <View style={styles.dropDownContainer}>
+        <List.Section title="Parameters:">
+          <List.Accordion title={names[parameter]}
+            expanded={expandedParam}
+            left={props => <List.Icon {...props} icon="weather-sunny" />}
+            onPress={handleParamPress}>
+            <List.Item
+            title={names["CLRSKY_SFC_SW_DWN"]}
+            onPress = {() => {setParameter("CLRSKY_SFC_SW_DWN");
+                              setExpandedParam(false)}} />
+            <List.Item 
+            title={names["ALLSKY_SFC_SW_DWN"]}
+            onPress = {() => {setParameter("ALLSKY_SFC_SW_DWN");
+                              setExpandedParam(false)}} />
+          </List.Accordion>
+
+          <List.Accordion
+            title={freq}
+            left={props => <List.Icon {...props} icon="calendar" />}
+            expanded={expandedFreq}
+            onPress={handleFreqPress}>
+            <List.Item 
+            title="daily"
+            onPress = {() => {setExpandedFreq(false); setFreq("daily") }} />
+            <List.Item 
+            title="weekly"
+            onPress = {() => {setExpandedFreq(false); setFreq("weekly") }} />
+            <List.Item 
+            title="monthly"
+            onPress = {() => {setExpandedFreq(false); setFreq("monthly") }} />
+          </List.Accordion>
+        </List.Section>
       </View>
 
       <SunButton 
