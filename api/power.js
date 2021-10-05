@@ -57,7 +57,6 @@ export default function getApiData(setData,freq,latitude,longitude,parameter,sta
           }
 
         } else if (freq == "monthly") {
-          console.log(key);
           var dateString = key.slice(0,4)+"-"+key.slice(4,6)+"-01"+"T23:45Z";
           var date = new Date(dateString);
           formattedDate = format(date, "MMM, yyyy")
