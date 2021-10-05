@@ -35,8 +35,8 @@ const HomeScreen = ({navigation,route}) => {
   const [endDate, setEndDate] = useState(new Date("2020-05-31T23:45Z")); // End Date
   const [parameter, setParameter] = useState("Choose Parameter"); // Parameters
   const [freq, setFreq] = useState("Choose Frequency"); // Frequency
-  const [showStartPicker, setShowStartPicker] = useState(false);
-  const [showEndPicker, setShowEndPicker] = useState(false);
+  const [showStartPicker, setShowStartPicker] = useState(Platform.OS === 'ios');
+  const [showEndPicker, setShowEndPicker] = useState(Platform.OS === 'ios');
   const [expandedParam, setExpandedParam] = useState(false);
   const [expandedFreq, setExpandedFreq] = useState(false);
   var names={"CLRSKY_SFC_SW_DWN":"Clear Sky Surface Shortwave Downward Irradiance","Choose Parameter":"Choose Parameter","ALLSKY_SFC_SW_DWN":"All Sky Surface Shortwave Downward Irradiance"}
