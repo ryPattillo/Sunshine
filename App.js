@@ -27,9 +27,9 @@ export default function App() {
 }
 
 const HomeScreen = ({navigation,route}) => {
-
-  const [region,setRegion] = useState([])
-  const [coordinates,setCoordinates] = useState({"latitude":51.5078788,"longitude":-0.0877321}) //Initial Coordinate data
+  const defaultCoordinates = {"latitude":28.538129,"longitude":-81.381494}
+  const [region,setRegion] = useState(defaultCoordinates)
+  const [coordinates,setCoordinates] = useState(defaultCoordinates)
   const [data, setData] = useState({});// API return data
   const [startDate, setStartDate] = useState(new Date("2020-01-01T23:45Z")); // Initial Date
   const [endDate, setEndDate] = useState(new Date("2020-05-31T23:45Z")); // End Date
@@ -42,8 +42,6 @@ const HomeScreen = ({navigation,route}) => {
   var latitude = coordinates["latitude"]
   var longitude = coordinates["longitude"]
 
-
-
   return (
 
     <ScrollView>
@@ -53,11 +51,11 @@ const HomeScreen = ({navigation,route}) => {
           onPress = {()=> {
             navigation.navigate({
               name: 'Map',
-              params: { coordinates: [region["latitude"] ,region["longitude"] ]},
+              params: {coordinates: [region["latitude"], region["longitude"]]},
             })}}
            initialRegion={{
-              latitude: 51.5078788,
-              longitude: -0.0877321,
+              latitude: region["latitude"],
+              longitude: region["longitude"],
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
              }} 

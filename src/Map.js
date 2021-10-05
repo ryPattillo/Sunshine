@@ -5,11 +5,11 @@ import {View} from 'react-native';
 import {styles} from './stylesheet.js';
 import {BottomButton} from './buttons.js';
 
-export const MapScreen = ({ navigation,route }) => {
+export const MapScreen = ({navigation,route}) => {
+const initCoordinates= {"latitude":route.params.coordinates[0],
+                        "longitude":route.params.coordinates[1]};
 
-const[region,setRegion] = useState([])
-
-
+const[region,setRegion] = useState(initCoordinates)
 
 return (
 
@@ -34,7 +34,7 @@ return (
           onPress={() => {
             navigation.navigate({
               name: 'SUNSHINE',
-              params: { coordinates: [region["latitude"] ,region["longitude"] ]},
+              params: {coordinates: [region["latitude"] ,region["longitude"]]},
             });
           }}
         />
