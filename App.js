@@ -47,6 +47,18 @@ const HomeScreen = ({navigation,route}) => {
   const handleParamPress = () => setExpandedParam(!expandedParam);
   const handleFreqPress = () => setExpandedFreq(!expandedFreq);
 
+  const onStartDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowStartPicker(Platform.OS === 'ios');
+    setStartDate(currentDate);
+  };
+
+  const onEndDateChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowEndPicker(Platform.OS === 'ios');
+    setEndDate(currentDate);
+  };
+
   return (
 
     <ScrollView>
@@ -95,10 +107,8 @@ const HomeScreen = ({navigation,route}) => {
               testID="dateTimePicker"
               value={startDate}
               display="default"
-              onChange={(event, value) => {
-                setShowStartPicker(Platform.OS === 'ios');
-                setStartDate(new Date(value));
-              }}
+              mode='date'
+              onChange={onStartDateChange}
             />
           )}
         </View>
@@ -111,10 +121,8 @@ const HomeScreen = ({navigation,route}) => {
               testID="dateTimePicker"
               value={endDate}
               display="default"
-              onChange={(event, value) => {
-                setShowEndPicker(Platform.OS === 'ios');
-                setEndDate(new Date(value));
-              }}
+              mode='date'
+              onChange={onEndDateChange}
             />
            )}
         </View>
